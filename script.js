@@ -78,3 +78,44 @@ function initMap() {
     console.error("❌ Fehler beim Initialisieren der Karte:", error);
   }
 }
+function zeigeBereich(bereich) {
+  const desk = document.getElementById("desk");
+  const karte = document.getElementById("karteContainer");
+  const person = document.getElementById("personPanel");
+
+  // Alles ausblenden
+  desk.style.display = "none";
+  if (karte) karte.style.display = "none";
+  if (person) person.style.display = "none";
+
+  if (bereich === "person") {
+    person.style.display = "block";
+    ladePersonDaten();
+  }
+}
+
+function ladePersonDaten() {
+  const uid = firebase.auth().currentUser?.uid;
+  if (!uid) return;
+
+  const ref = firebase.database().ref("users/" + uid + "/person");
+
+  ref.once("value").then(snapshot => {
+    const data = snapshot.val() || {
+      name: "Unbekannt",
+      anschrift: "Keine",
+      eigenschaften: {
+        stärke: 20,
+        intelligenz: 35,
+        ausdauer: 10
+      }
+    };
+
+    // Werte anzeigen
+    document.getElementById("charName").textContent = data.name;
+    document.getElementById("charAddress").textContent = data.anschrift;
+    document.getElementById("stärkeBar").style.width = data.eigenschaften.stärke + "%";
+    document.getElementById("intelligenzBar").style.width = data.eigenschaften.intelligenz + "%";
+    document.getElementById("ausdauerBar").style.width = data.eigenschaften.ausdauer + "%";
+  });
+}
