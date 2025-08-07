@@ -9,13 +9,12 @@ function toggleKarte() {
   karteAktiv = !karteAktiv;
 
   if (karteAktiv) {
-    desk.style.display = "none";
-    karteContainer.style.display = "block";
+  desk.style.display = "none";
+  karteContainer.style.display = "block";
+  setTimeout(() => {
     initMap();
-  } else {
-    karteContainer.style.display = "none";
-    desk.style.display = "block";
-  }
+    if (map) map.invalidateSize(); // ← Das ist die Magie!
+  }, 100);
 }
 
 function initMap() {
