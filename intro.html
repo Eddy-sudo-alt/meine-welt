@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Intro</title>
+</head>
+<body>
+  <div id="intro" style="text-align:center;">
+    <img src="Intro.jpg" alt="Intro" style="width:250px;">
+    <p id="prophecyText">Lade Prophezeiung...</p>
+    <button onclick="startGame()">Weiter</button>
+  </div>
+
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database-compat.js"></script>
+  <script src="firebase-config.js"></script>
+  <script>
+    const auth = firebase.auth();
+    const db = firebase.database();
+
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        const uid = user.uid;
+        db.ref("users/" + uid).once("value").then(snapshot => {
+          const data = snapshot.val();
+          if (data && data.prophecy) {
+            document.getElementById("prophecyText").innerText = data.prophecy;
+          }
+        });
+      }
+    });
+
+    function startGame() {
+      const user = auth.currentUser;
+      if (!user) return;
+
+      db.ref("users/" + user.uid).update({ introSeen: true }).then(() => {
+        window.location.href = "spiel.html";
+      });
+    }
+  </script>
+</body>
+</html>
