@@ -1,4 +1,4 @@
-/* Allgemein */
+(/* Allgemein */
 body {
   font-family: sans-serif;
   margin: 0;
@@ -135,4 +135,10 @@ footer {
   #karte {
     min-height: 500px;
   }
+}
+#karte {
+  width: 100% !important;
+  height: 500px !important;
+  min-height: 500px !important;
+  background: lightgray;
 }
