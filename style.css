@@ -84,3 +84,33 @@ footer {
   width: 100%;
   margin: 5px 0;
 }
+@media (max-width: 768px) {
+  #container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    border: none;
+    text-align: center;
+  }
+
+  .middle {
+    order: -1; /* Schreibtisch nach oben */
+  }
+
+  .sidebar.left,
+  .sidebar.right {
+    border: none;
+  }
+
+  .sidebar button {
+    display: block;
+    width: 80%;
+    margin: 10px auto;
+  }
+
+  footer {
+    font-size: 0.8em;
+  }
+}
