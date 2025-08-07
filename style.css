@@ -79,3 +79,8 @@ footer {
 #login-container h2 {
   margin-bottom: 10px;
 }
+.sidebar.left button {
+  display: block;
+  width: 100%;
+  margin: 5px 0;
+}
